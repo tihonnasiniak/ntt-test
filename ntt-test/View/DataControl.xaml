@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="ntt_test.View.DataControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ntt_test.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <local:StringToBrushConverter x:Key="StringToBrushConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <DataGrid ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Дата" Binding="{Binding date, StringFormat=\{0:d\}}"/>
+                <DataGridTextColumn Header="Объект А" Binding="{Binding objectA}"/>
+                <DataGridTextColumn Header="Тип А" Binding="{Binding typeA}"/>
+                <DataGridTextColumn Header="Объект Б" Binding="{Binding objectB}"/>
+                <DataGridTextColumn Header="Тип Б" Binding="{Binding typeB}"/>
+                <DataGridTextColumn Header="Направление" Binding="{Binding direction}"/>
+                <DataGridTextColumn Header="Цвет" Binding="{Binding color}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Style.Setters>
+                                <Setter Property="Background" Value="{Binding color, Converter={StaticResource StringToBrushConverter}}" />
+                            </Style.Setters>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Интенсивность" Binding="{Binding intensity}"/>
+                <DataGridTextColumn Header="Широта А" Binding="{Binding latitudeA}"/>
+                <DataGridTextColumn Header="Долгота А" Binding="{Binding longitudeA}"/>
+                <DataGridTextColumn Header="Широта Б" Binding="{Binding latitudeB}"/>
+                <DataGridTextColumn Header="Долгота Б" Binding="{Binding longitudeB}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

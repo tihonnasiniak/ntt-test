@@ -13,16 +13,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ntt_test
+namespace ntt_test.View
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для DataControl.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class DataControl : UserControl
     {
-        public MainWindow()
+        public DataControl(List<Model.Link> links)
         {
             InitializeComponent();
+            this.DataContext = links;
+            return;
         }
     }
 }
