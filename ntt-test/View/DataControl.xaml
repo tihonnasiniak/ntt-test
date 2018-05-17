@@ -67,7 +67,7 @@
                         Очистить базу данных
                     </Button>
                     <Button Click="SaveToDBButton_Click">
-                        Сохранить в базу данных
+                        Добавить в базу данных
                     </Button>
                 </StackPanel>
             </TabItem>
