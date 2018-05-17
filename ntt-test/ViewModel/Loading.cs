@@ -17,13 +17,13 @@ namespace ntt_test.ViewModel
         public event LoadingControl.LoadedEventArgs FileLoaded;
 
         protected LoadingControl _control;
-        protected FileLoader _loader;
+        protected Loader _loader;
         protected double _lastPercent;
 
         public Loading(LoadingControl control)
         {
             _control = control;
-            _loader = new FileLoader();
+            _loader = new Loader();
             _loader.FileLoaded += (l) => Application.Current.Dispatcher.Invoke(new Action(() => FileLoaded?.Invoke(l)));
             _loader.ProgressChanged += Loader_ProgressChanged;
             _loader.Error += (s) => Application.Current.Dispatcher.Invoke(new Action(() => Canceled?.Invoke(s)));
@@ -31,7 +31,15 @@ namespace ntt_test.ViewModel
 
         public void LoadFile(string fileName)
         {
-            Task.Run(() => _loader.Load(fileName));
+            Task.Run(() => _loader.LoadFile(fileName));
+        }
+
+        public void LoadFromDatabase()
+        {
+            //Хорошо бы перевести на биндинги, но времени не хватает, поэтому MVVM немного нарушается
+            _control.LoadProgressBar.IsIndeterminate = true;
+            _control.ProgressPercentageBlock.Text = "Загрузка из базы данных";
+            Task.Run(() => _loader.LoadFromDatabase());
         }
         
         private void Loader_ProgressChanged(double percent)

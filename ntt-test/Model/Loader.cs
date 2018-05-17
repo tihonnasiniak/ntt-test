@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Globalization;
 using System.Windows.Media;
+using System.Data.Entity;
 
 namespace ntt_test.Model
 {
-    public class FileLoader
+    public class Loader
     {
         public event DoubleEventArgs ProgressChanged;
         public delegate void DoubleEventArgs(double percent);
@@ -29,11 +30,7 @@ namespace ntt_test.Model
             "longitudea", "latitudeb", "longitudeb"
         };
 
-        public FileLoader()
-        {
-        }
-
-        public void Load(string fileName)
+        public void LoadFile(string fileName)
         {
             try
             {
@@ -81,6 +78,20 @@ namespace ntt_test.Model
                     FileLoaded?.Invoke(listToReturn);
             }
             catch(Exception e)
+            {
+                Error?.Invoke(e.Message);
+            }
+        }
+
+        public void LoadFromDatabase()
+        {
+            try
+            {
+                var db = new ApplicationContext();
+                db.Links.Load();
+                FileLoaded?.Invoke(db.Links.Local.ToList());
+            }
+            catch (Exception e)
             {
                 Error?.Invoke(e.Message);
             }

@@ -2,15 +2,14 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using System.Windows.Media;
 
 namespace ntt_test.Converters
 {
-    public class StringToBrushConverter : IValueConverter
+    class LatitudeToXConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return new SolidColorBrush((Color)value);
+            return (((double)value + 90) * -1) + 180;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

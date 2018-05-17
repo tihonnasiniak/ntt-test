@@ -20,7 +20,7 @@
         <ProgressBar Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0"
                      Name="LoadProgressBar" Height="15" Margin="15"
                      Minimum="0" Maximum="1"/>
-        <TextBlock Grid.Column="1" Grid.Row="1"
+        <TextBlock Grid.Column="1" Grid.Row="1" Name="ProgressPercentageBlock"
                    Text="{Binding StringFormat=Загрузка: \{0:P0\}, ElementName=LoadProgressBar, Path=Value}"/>
         <Button Grid.Column="1" Grid.Row="3" Click="CancelButton_Click" Content="Отмена"/>
     </Grid>

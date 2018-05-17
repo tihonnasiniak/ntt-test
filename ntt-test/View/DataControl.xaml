@@ -4,35 +4,73 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ntt_test.View"
+             xmlns:converters="clr-namespace:ntt_test.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <local:StringToBrushConverter x:Key="StringToBrushConverter"/>
+        <converters:StringToBrushConverter x:Key="StringToBrushConverter"/>
+        <converters:LatitudeToXConverter x:Key="LatitudeToXConverter"/>
+        <converters:LongitudeToYConverter x:Key="LogitudeToYConverter"/>
     </UserControl.Resources>
     <Grid>
-        <DataGrid ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Дата" Binding="{Binding date, StringFormat=\{0:d\}}"/>
-                <DataGridTextColumn Header="Объект А" Binding="{Binding objectA}"/>
-                <DataGridTextColumn Header="Тип А" Binding="{Binding typeA}"/>
-                <DataGridTextColumn Header="Объект Б" Binding="{Binding objectB}"/>
-                <DataGridTextColumn Header="Тип Б" Binding="{Binding typeB}"/>
-                <DataGridTextColumn Header="Направление" Binding="{Binding direction}"/>
-                <DataGridTextColumn Header="Цвет" Binding="{Binding color}">
-                    <DataGridTextColumn.CellStyle>
-                        <Style TargetType="DataGridCell">
-                            <Style.Setters>
-                                <Setter Property="Background" Value="{Binding color, Converter={StaticResource StringToBrushConverter}}" />
-                            </Style.Setters>
-                        </Style>
-                    </DataGridTextColumn.CellStyle>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="Интенсивность" Binding="{Binding intensity}"/>
-                <DataGridTextColumn Header="Широта А" Binding="{Binding latitudeA}"/>
-                <DataGridTextColumn Header="Долгота А" Binding="{Binding longitudeA}"/>
-                <DataGridTextColumn Header="Широта Б" Binding="{Binding latitudeB}"/>
-                <DataGridTextColumn Header="Долгота Б" Binding="{Binding longitudeB}"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <TabControl>
+            <TabItem Header="Таблица">
+                <DataGrid ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Дата" Binding="{Binding date, StringFormat=\{0:d\}}"/>
+                        <DataGridTextColumn Header="Объект А" Binding="{Binding objectA}"/>
+                        <DataGridTextColumn Header="Тип А" Binding="{Binding typeA}"/>
+                        <DataGridTextColumn Header="Объект Б" Binding="{Binding objectB}"/>
+                        <DataGridTextColumn Header="Тип Б" Binding="{Binding typeB}"/>
+                        <DataGridTextColumn Header="Направление" Binding="{Binding direction}"/>
+                        <DataGridTextColumn Header="Цвет" Binding="{Binding color}">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Style.Setters>
+                                        <Setter Property="BorderThickness" Value="3"/>
+                                        <Setter Property="BorderBrush" Value="{Binding color, Converter={StaticResource StringToBrushConverter}}" />
+                                    </Style.Setters>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Интенсивность" Binding="{Binding intensity}"/>
+                        <DataGridTextColumn Header="Широта А" Binding="{Binding latitudeA}"/>
+                        <DataGridTextColumn Header="Долгота А" Binding="{Binding longitudeA}"/>
+                        <DataGridTextColumn Header="Широта Б" Binding="{Binding latitudeB}"/>
+                        <DataGridTextColumn Header="Долгота Б" Binding="{Binding longitudeB}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Графическое представление">
+                <ItemsControl ItemsSource="{Binding}" Padding="10">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas VerticalAlignment="Top" HorizontalAlignment="Left" Background="Beige" Width="360" Height="180"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Line Y1="{Binding latitudeA, Converter={StaticResource LatitudeToXConverter}}" 
+                                  X1="{Binding longitudeA, Converter={StaticResource LogitudeToYConverter}}" 
+                                  Y2="{Binding latitudeB, Converter={StaticResource LatitudeToXConverter}}" 
+                                  X2="{Binding longitudeB, Converter={StaticResource LogitudeToYConverter}}"
+                                  Stroke="{Binding color, Converter={StaticResource StringToBrushConverter}}" 
+                                  StrokeThickness="{Binding intensity}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </TabItem>
+            <TabItem Header="БД">
+                <StackPanel HorizontalAlignment="Center">
+                    <Button Click="ClearDBButton_Click" 
+                            IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=local:DataControl}, Path=DBButtonsEnabled}">
+                        Очистить базу данных
+                    </Button>
+                    <Button Click="SaveToDBButton_Click">
+                        Сохранить в базу данных
+                    </Button>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

@@ -14,6 +14,7 @@ namespace ntt_test.ViewModel
     public class FileSelection
     {
         public event FileSelectionControl.FileSelectedEventHandler FileSelected;
+        public event FileSelectionControl.DatabaseSelectedEventHandler DatabaseSelected;
 
         protected FileSelectionControl _control;
 
@@ -46,5 +47,9 @@ namespace ntt_test.ViewModel
                 FileSelected?.Invoke(openFileDialog.FileName);
         }
 
+        public void DatabaseButton_Click(object sender, RoutedEventArgs e)
+        {
+            DatabaseSelected?.Invoke();
+        }
     }
 }

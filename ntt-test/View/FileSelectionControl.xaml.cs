@@ -21,12 +21,16 @@ namespace ntt_test.View
         public event FileSelectedEventHandler FileSelected;
         public delegate void FileSelectedEventHandler(string fileName);
 
+        public event DatabaseSelectedEventHandler DatabaseSelected;
+        public delegate void DatabaseSelectedEventHandler();
+
         protected ViewModel.FileSelection _viewModel;
 
         public FileSelectionControl()
         {
             _viewModel = new ViewModel.FileSelection(this);
             _viewModel.FileSelected += (fn) => FileSelected?.Invoke(fn);
+            _viewModel.DatabaseSelected += () => DatabaseSelected?.Invoke();
             InitializeComponent();
         }
 
@@ -38,6 +42,11 @@ namespace ntt_test.View
         private void FileButton_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.FileButton_Click(sender, e);
+        }
+
+        private void DatabaseButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.DatabaseButton_Click(sender, e);
         }
     }
 }

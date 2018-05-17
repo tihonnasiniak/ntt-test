@@ -45,6 +45,11 @@ namespace ntt_test.View
             _viewModel.LoadFile(fileName);
         }
 
+        public void LoadFromDatabase()
+        {
+            _viewModel.LoadFromDatabase();
+        }
+
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.CancelButton_Click(sender, e);

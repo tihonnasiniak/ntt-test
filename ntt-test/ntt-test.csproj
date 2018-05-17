@@ -92,8 +92,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Converters\LatitudeToXConverter.cs" />
+    <Compile Include="Converters\LongitudeToYConverter.cs" />
     <Compile Include="Converters\StringToBrushConverter.cs" />
-    <Compile Include="Model\FileLoader.cs" />
+    <Compile Include="Model\ApplicationContext.cs" />
+    <Compile Include="Model\DBInteractor.cs" />
+    <Compile Include="Model\Loader.cs" />
     <Compile Include="Model\Link.cs" />
     <Compile Include="ViewModel\FileSelection.cs" />
     <Compile Include="ViewModel\Loading.cs" />
@@ -129,6 +133,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="links.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

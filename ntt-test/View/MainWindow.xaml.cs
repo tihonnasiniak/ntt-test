@@ -26,7 +26,8 @@ namespace ntt_test.View
             get { return (object)GetValue(MainContentProperty); }
             set { SetValue(MainContentProperty, value); }
         }
-        public static readonly DependencyProperty MainContentProperty = DependencyProperty.Register("MainContent", typeof(object), typeof(MainWindow), new FrameworkPropertyMetadata(null));
+        public static readonly DependencyProperty MainContentProperty = 
+            DependencyProperty.Register("MainContent", typeof(object), typeof(MainWindow), new FrameworkPropertyMetadata(null));
 
         public MainWindow()
         {
@@ -39,6 +40,7 @@ namespace ntt_test.View
         {
             var control = new FileSelectionControl();
             control.FileSelected += ShowLoading;
+            control.DatabaseSelected += ShowDatabaseLoading;
             MainContent = control;
         }
 
@@ -49,6 +51,15 @@ namespace ntt_test.View
             control.FileLoaded += ShowData;
             MainContent = control;
             control.LoadFile(fileName);
+        }
+
+        private void ShowDatabaseLoading()
+        {
+            var control = new LoadingControl();
+            control.Canceled += (m) => ShowFileSelection();
+            control.FileLoaded += ShowData;
+            MainContent = control;
+            control.LoadFromDatabase();
         }
 
         private void ShowData(List<Model.Link> linksList)
